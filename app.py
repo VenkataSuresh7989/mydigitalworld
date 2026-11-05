@@ -8,12 +8,18 @@ app = Flask(__name__, template_folder=".")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-DATA_DIR = os.environ.get("DATA_DIR", BASE_DIR)
+DATA_DIR = os.environ.get(
+    "DATA_DIR",
+    os.path.join("/tmp", "mydigitalworld")
+)
+
 DATA_FILE = os.path.join(DATA_DIR, "data.json")
 
 UPLOAD_FOLDER = os.path.join(DATA_DIR, "uploads")
+
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+os.makedirs(DATA_DIR, exist_ok=True)
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
