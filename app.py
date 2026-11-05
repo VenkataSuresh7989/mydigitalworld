@@ -3,7 +3,9 @@ import os
 from flask import Flask, jsonify, render_template, request
 from werkzeug.utils import secure_filename
 
-app = Flask(__name__)
+# Initialize Flask with template_folder set to current directory (".")
+app = Flask(__name__, template_folder=".")
+
 DATA_FILE = "data.json"
 UPLOAD_FOLDER = "static/uploads"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -171,4 +173,4 @@ def delete_item(cat_id, index):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(debug=True, port=5000)
