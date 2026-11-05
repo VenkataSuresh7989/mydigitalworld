@@ -1,13 +1,17 @@
 import json
 import os
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_from_directory
 from werkzeug.utils import secure_filename
 
 # Initialize Flask with template_folder set to current directory (".")
 app = Flask(__name__, template_folder=".")
 
-DATA_FILE = "data.json"
-UPLOAD_FOLDER = "static/uploads"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+DATA_DIR = os.environ.get("DATA_DIR", BASE_DIR)
+DATA_FILE = os.path.join(DATA_DIR, "data.json")
+
+UPLOAD_FOLDER = os.path.join(DATA_DIR, "uploads")
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -43,7 +47,7 @@ def save_uploaded_files(files):
                 filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
                 counter += 1
             file.save(filepath)
-            saved_paths.append(f"/static/uploads/{filename}")
+            saved_paths.append(f"/uploads/{filename}")
     return saved_paths
 
 
@@ -171,6 +175,10 @@ def delete_item(cat_id, index):
                 return jsonify(cat)
     return jsonify({"error": "Item not found"}), 404
 
+@app.route("/uploads/<path:filename>")
+def uploaded_file(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
