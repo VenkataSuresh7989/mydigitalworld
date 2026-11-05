@@ -1,3 +1,15 @@
 {
-    "categories": []
+    "categories": [
+        {
+            "id": "tezst-96a0",
+            "name": "tezst",
+            "items": [
+                {
+                    "type": "key_value",
+                    "key": "gfg",
+                    "value": "5erre"
+                }
+            ]
+        }
+    ]
 }
