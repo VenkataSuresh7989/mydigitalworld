@@ -1,15 +1,3 @@
 {
-    "categories": [
-        {
-            "id": "suresh-6d77",
-            "name": "Suresh",
-            "items": [
-                {
-                    "type": "key_value",
-                    "key": "venkat",
-                    "value": "suresh"
-                }
-            ]
-        }
-    ]
+    "categories": []
 }
