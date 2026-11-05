@@ -57,6 +57,14 @@ def get_data():
     return jsonify(load_data())
 
 
+# --- RESET ALL DATA ENDPOINT ---
+@app.route("/api/reset", methods=["POST"])
+def reset_data():
+    default_data = {"categories": []}
+    save_data(default_data)
+    return jsonify({"success": True, "message": "All data has been reset."})
+
+
 # --- CATEGORIES (TABS) ---
 @app.route("/api/category", methods=["POST"])
 def add_category():
@@ -173,4 +181,6 @@ def delete_item(cat_id, index):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
