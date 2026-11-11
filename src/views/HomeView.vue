@@ -674,7 +674,7 @@ function watchFields(tabId, frameId) {
     snapshot => {
       const token = fieldsLoadToken.value + 1
       fieldsLoadToken.value = token
-      const rawFields = snapshot.docs.map(item => ({ id: item.id, ...item.data() }))
+      const rawFields = sortByCreatedAt(snapshot.docs.map(item => ({ id: item.id, ...item.data() })))
       hydrateFields(tabId, frameId, rawFields, token).catch(error => {
         loadingFields.value = false
         reportError(error, 'Could not load field images')
