@@ -228,16 +228,16 @@
                     <button v-if="editUnlocked" class="button button-small button-danger" type="button" @click="deleteField(field)">Delete</button>
                   </div>
                 </div>
-                <div v-if="field.type === 'direct'" class="field-body direct-value">{{ field.value || 'No value entered.' }}</div>
+                <div v-if="field.type === 'direct'" class="field-body field-value">{{ field.value || 'No value entered.' }}</div>
                 <dl v-else-if="field.type === 'keyValue'" class="key-value-list">
                   <template v-for="(pair, index) in field.pairs" :key="`${field.id}-${index}`">
                     <dt>{{ pair.key }}</dt>
-                    <dd>{{ pair.value }}</dd>
+                    <dd class="field-value">{{ pair.value }}</dd>
                   </template>
                   <p v-if="!field.pairs?.length" class="muted">No key–value pairs.</p>
                 </dl>
                 <div v-else class="text-image-content">
-                  <p v-if="field.text" class="field-body preserve-lines">{{ field.text }}</p>
+                  <p v-if="field.text" class="field-body field-value preserve-lines">{{ field.text }}</p>
                   <p v-else class="muted">No text entered.</p>
                   <div v-if="field.images?.length" class="image-grid">
                     <button v-for="image in field.images" :key="image.id" class="image-thumbnail" type="button" :aria-label="`Zoom ${image.name || 'uploaded image'}`" @click="openImage(image)">
@@ -923,7 +923,7 @@ function fieldTypeLabel(type) {
 }
 
 function fieldIcon(type) {
-  return { direct: 'Aa', keyValue: '↔', textImages: '▧' }[type] || '•'
+  return { direct: '*', keyValue: '↔', textImages: '▧' }[type] || '•'
 }
 
 function openFieldEditor(field = null) {
@@ -1272,10 +1272,10 @@ select:focus, input:focus, textarea:focus { border-color: #8792ed; box-shadow: 0
 .field-card h3 { overflow-wrap: anywhere; margin: 0; color: #273448; font-size: 14px; }
 .field-card-actions { display: flex; flex: 0 0 auto; gap: 7px; }
 .field-body { margin: 16px 0 0; color: #505d70; font-size: 13px; line-height: 1.75; }
-.direct-value { white-space: pre-wrap; overflow-wrap: anywhere; }
+.field-value { padding: 10px 12px; border-left: 3px solid #6677e9; border-radius: 7px; background: #f2f4ff; color: #3646ad; font-weight: 600; white-space: pre-wrap; overflow-wrap: anywhere; }
 .key-value-list { display: grid; min-width: 0; grid-template-columns: minmax(0, min(32%, 180px)) minmax(0, 1fr); gap: 9px 18px; margin: 17px 0 0; font-size: 12px; }
 .key-value-list dt { color: #8a94a5; }
-.key-value-list dd { min-width: 0; margin: 0; color: #435064; overflow-wrap: anywhere; }
+.key-value-list dd { min-width: 0; margin: 0; overflow-wrap: anywhere; }
 .key-value-list p { grid-column: 1 / -1; margin: 0; }
 .text-image-content > p { margin: 16px 0; }
 .preserve-lines { white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -1433,7 +1433,7 @@ select:focus, input:focus, textarea:focus { border-color: #8792ed; box-shadow: 0
 .theme-dark .field-type-option:hover,
 .theme-dark .field-type-option-active { background: #313b56; color: #d5daff; }
 .theme-dark .field-type-check { color: #b6c0ff; }
-.theme-dark .key-value-list dd { color: #d0d8e5; }
+.theme-dark .field-value { border-left-color: #8995ff; background: #293149; color: #d5daff; }
 .theme-dark .image-thumbnail,
 .theme-dark .editor-image { border-color: #364255; background: #151d29; }
 .theme-dark .editor-image-preview { background: #121923; }
